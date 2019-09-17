@@ -1,5 +1,8 @@
 # tadanoSpeech2Text
 
+## application url
+https://tadanospeech2text.web.app/
+
 ## Project setup
 ```
 yarn install
