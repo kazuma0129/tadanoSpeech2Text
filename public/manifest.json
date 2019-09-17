@@ -1,6 +1,6 @@
 {
-  "name": "jimaku",
-  "short_name": "jimaku",
+  "name": "tadanoSpeech2Text",
+  "short_name": "tadanoSpeech2Text",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

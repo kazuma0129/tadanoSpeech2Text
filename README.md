@@ -1,4 +1,4 @@
-# jimaku
+# tadanoSpeech2Text
 
 ## Project setup
 ```
