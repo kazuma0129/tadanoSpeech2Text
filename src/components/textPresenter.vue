@@ -50,22 +50,15 @@ export default {
   },
   methods: {
     speechRecognize: function() {
-      this.recognition.onstart = () => {
-        console.log("onstart");
-      };
-      this.recognition.onspeechstart = () => {
-        console.log("onspeechstart");
-      };
-      this.recognition.onspeechend = () => {
-        console.log("onspeechend");
-      };
+      this.recognition.onstart = () => {};
+      this.recognition.onspeechstart = () => {};
+      this.recognition.onspeechend = () => {};
       this.recognition.onend = () => {
         if (this.state) {
           this.startSpeech();
         } else {
           this.stopSpeech();
         }
-        console.log("onend");
       };
       this.recognition.onresult = event => {
         let interimTranscript = ""; // 暫定(灰色)の認識結果
