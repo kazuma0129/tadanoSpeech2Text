@@ -2,21 +2,33 @@
   <v-container fluid>
     <v-col col="12">
       <v-row justify="center">
-        <h1 class="font-weight-thin">{{ text }}</h1>
+        <h1 class="font-weight-thin">
+          {{ text }}
+        </h1>
       </v-row>
       <v-row justify="center">
         <v-btn
+          v-show="!state"
           large
           outlined
           color="primary"
-          v-show="!state"
           @click="startSpeech"
-          >️️️⚡️go⚡️</v-btn
+          >⚡️go⚡️</v-btn
         >
-        <v-btn large outlined color="warning" v-show="state" @click="stopSpeech"
-          >✋stop✋</v-btn
-        >
+        <v-btn v-show="state" large outlined color="warning" @click="stopSpeech"
+          >✋stop✋
+        </v-btn>
       </v-row>
+      <v-col class="mt-10">
+        <v-row
+          justify="center"
+          v-for="(str, key) in results"
+          :key="key"
+          class="ma-3"
+        >
+          <p>{{ str }}</p>
+        </v-row>
+      </v-col>
     </v-col>
   </v-container>
 </template>
@@ -25,65 +37,67 @@
 /* eslint-disable no-console */
 
 export default {
-  name: "textPresenter",
-  data: function() {
+  name: 'TextPresenter',
+  props: {
+    font: null
+  },
+  data: function () {
     return {
       state: Boolean,
       text: null,
       // eslint-disable-next-line no-undef
-      recognition: new webkitSpeechRecognition()
-    };
-  },
-  props: {
-    font: String
-  },
-  created: function() {
-    this.speechRecognize();
-    this.state = false;
+      recognition: new webkitSpeechRecognition(),
+      results: []
+    }
   },
   watch: {
-    state: function() {
+    state: function () {
       if (!this.state) {
-        this.stopSpeech();
+        this.stopSpeech()
       }
     }
   },
+  created: function () {
+    this.speechRecognize()
+    this.state = false
+  },
   methods: {
-    speechRecognize: function() {
-      this.recognition.onstart = () => {};
-      this.recognition.onspeechstart = () => {};
-      this.recognition.onspeechend = () => {};
+    speechRecognize: function () {
+      this.recognition.onstart = () => {}
+      this.recognition.onspeechstart = () => {}
+      this.recognition.onspeechend = () => {}
       this.recognition.onend = () => {
         if (this.state) {
-          this.startSpeech();
+          this.startSpeech()
         } else {
-          this.stopSpeech();
+          this.stopSpeech()
         }
-      };
-      this.recognition.onresult = event => {
-        let interimTranscript = ""; // 暫定(灰色)の認識結果
-        let finalTranscript = ""; // 確定した(黒の)認識結果
+      }
+      this.recognition.onresult = (event) => {
+        let interimTranscript = '' // 暫定(灰色)の認識結果
+        let finalTranscript = '' // 確定した(黒の)認識結果
         for (let i = event.resultIndex; i < event.results.length; i++) {
-          let transcript = event.results[i][0].transcript;
+          let transcript = event.results[i][0].transcript
           if (event.results[i].isFinal) {
-            finalTranscript += transcript;
+            finalTranscript += transcript
+            this.results = [...this.results, finalTranscript]
           } else {
-            interimTranscript = transcript;
+            interimTranscript = transcript
           }
-          this.text = finalTranscript + interimTranscript;
+          this.text = finalTranscript + interimTranscript
         }
-      };
+      }
     },
-    startSpeech: function() {
-      this.recognition.lang = "ja-JP";
-      this.recognition.interimResults = true;
-      this.state = true;
-      this.recognition.start();
+    startSpeech: function () {
+      this.recognition.lang = 'ja-JP'
+      this.recognition.interimResults = true
+      this.state = true
+      this.recognition.start()
     },
-    stopSpeech: function() {
-      this.state = false;
-      this.recognition.stop();
+    stopSpeech: function () {
+      this.state = false
+      this.recognition.stop()
     }
   }
-};
+}
 </script>

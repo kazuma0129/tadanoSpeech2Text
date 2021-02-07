@@ -1,12 +1,12 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script>
 export default {
-  name: "fornSelector",
-  data: function() {},
-  methods: function() {},
-  watch: function() {}
-};
+  name: 'FornSelector',
+  data: function () {},
+  watch: function () {},
+  methods: function () {}
+}
 </script>

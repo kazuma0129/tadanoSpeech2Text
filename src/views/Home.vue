@@ -1,8 +1,8 @@
 <template>
   <v-container fluid fill-height>
     <v-col col="12">
-      <v-row align="center" justify="center">
-        <textPresenter :font="font"></textPresenter>
+      <v-row justify="center" align="center">
+        <textPresenter v-show="isAvailavle" :font="font" />
       </v-row>
     </v-col>
   </v-container>
@@ -11,20 +11,23 @@
 <script>
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-import textPresenter from "../components/textPresenter";
+import textPresenter from '../components/textPresenter'
 
 export default {
-  name: "home",
+  name: 'Home',
   components: {
     textPresenter
   },
-  data: function() {
+  data() {
     return {
-      font: String
-    };
+      font: '',
+      // eslint-disable-next-line no-undef
+      isAvailavle: !!webkitSpeechRecognition
+    }
   },
-  created: function() {},
   watch: {},
+  created() {},
+  mounted() {},
   methods: {}
-};
+}
 </script>
